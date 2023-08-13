@@ -360,6 +360,26 @@ class Blogger_Importer extends WP_Importer {
         }
     }
 
+    function clean_content(string $content): string {
+        // Taken from https://stackoverflow.com/a/6225706
+        $pattern = array(
+            '/>[^\S ]+/', // strip whitespaces after tags, except space
+            '/[^\S ]+</', // strip whitespaces before tags, except space
+            '/(\s)+/', // shorten multiple whitespace sequences
+            '/<!--(.|\s)*?-->/', // Remove HTML comments
+            '/http:\/\//', // Replace http links by https ones
+        );
+
+        $replacement = array(
+            '>',
+            '<',
+            '\\1',
+            '',
+            'https://',
+        );
+        return preg_replace($pattern, $replacement, $content) ?: '';
+    }
+
     /**
      * Create new posts based on import information
      */
@@ -391,7 +411,7 @@ class Blogger_Importer extends WP_Importer {
             $blogentry->updated = $item->get_updated();
             $blogentry->isDraft = $item->get_draft_status();
             $blogentry->title = $item->get_title();
-            $blogentry->content = $item->get_content();
+            $blogentry->content = $this->clean_content($item->get_content());
             $blogentry->geotags = $item->get_geotags();
 
             // map the post author
@@ -450,7 +470,7 @@ class Blogger_Importer extends WP_Importer {
 
             $commententry->id = $item->get_id();
             $commententry->updated = $item->get_updated();
-            $commententry->content = $item->get_content();
+            $commententry->content = $this->clean_content($item->get_content());
             $commententry->author = $item->get_author()->get_name();
             $commententry->authoruri = $item->get_author()->get_link();
             $commententry->authoremail = $item->get_author()->get_email();
