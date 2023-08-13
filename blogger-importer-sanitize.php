@@ -125,9 +125,9 @@ class Blogger_Importer_Sanitize extends SimplePie_Sanitize
 
     //Latest SimplePie checks for this function
     public function set_registry(SimplePie_Registry $registry)
-	{
-		parent::set_registry($registry);
-	}
+    {
+        parent::set_registry($registry);
+    }
 
 }
 

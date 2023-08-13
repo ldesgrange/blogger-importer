@@ -43,8 +43,8 @@ if (!class_exists('BloggerEntry'))
                 $post_title = $this->title;
                 $post_author = $this->author;
                 $post_status = $this->isDraft ? 'draft' : 'publish';
-        		//AGC:24/10/2013 Turn off the pingbacks
-        		$post_pingback = Blogger_Importer::POST_PINGBACK;
+                //AGC:24/10/2013 Turn off the pingbacks
+                $post_pingback = Blogger_Importer::POST_PINGBACK;
 
                 // N.B. Clean up of $post_content is now part of the sanitize class
                 // Check for duplication part of calling function
@@ -53,7 +53,7 @@ if (!class_exists('BloggerEntry'))
                 $post_id = wp_insert_post($post);
                 if (is_wp_error($post_id))
                     return $post_id;
-		
+
                 wp_create_categories(array_map('addslashes', $this->categories), $post_id);
 
                 add_post_meta($post_id, 'blogger_blog', $this->blogurl, true);
