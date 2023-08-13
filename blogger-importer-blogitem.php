@@ -70,7 +70,7 @@ if (!class_exists('WP_SimplePie_Blog_Item'))
         function get_geotags()
         {//Return an array of geo tags see http://codex.wordpress.org/Geodata
             //example source
-            //        <georss:featurename>Rådhuspladsen 3, 1550 Copenhagen, Denmark</georss:featurename>
+            //        <georss:featurename>RÃ¥dhuspladsen 3, 1550 Copenhagen, Denmark</georss:featurename>
             //        <georss:point>55.6760968 12.5683371</georss:point>
             
 
